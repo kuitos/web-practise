@@ -1,0 +1,29 @@
+<!--
+ Created by Kuitos on 2015/04/15 上午11:26.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<a href='#'> 第一个链接 </a> </br>
+<a href='#'> 第二个链接 </a> </br>
+<a href='#'> 第三个链接 </a> </br>
+<a href='#'> 第四个链接 </a> </br>
+<script type="text/javascript">
+    var lis = document.links;
+    var a = {name:new String("a")};
+    for(var i = 0, length = lis.length; i < length; i++) {
+        (function(a) {
+            lis[i].onclick = function() {
+                console.log(a);
+            };
+        })(a.name);
+    }
+    a.name.s="b";
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<script src="bower_components/angular/angular.min.js"></script>
+<script>
+    (function () {
+        "use strict";
+
+        function treesFilter(trees, search) {
+
+            var tree, i, length;
+
+            function searchTree(tree, search) {
+
+                if (tree.children && tree.children.length) {
+
+                    for (var i = 0; i < tree.children.length; i++) {
+                        var child = tree.children[i];
+                        if (!searchTree(child, search)) {
+                            tree.children.splice(i, 1);
+                            i--;
+                        }
+                    }
+
+                    return !!tree.children.length;
+
+                } else {
+
+                    return !!~tree.caption.indexOf(search);
+                }
+
+                return false;
+
+            }
+
+            for (i = 0, length = trees.length; i < length; i++) {
+                tree = trees[i];
+                searchTree(tree, search);
+            }
+
+            return trees;
+        }
+
+        function treesFilterV2(trees, search) {
+
+            var result = [];
+
+            trees.forEach(function (tree) {
+
+                var tempResult = [];
+
+                if (tree.children && tree.children.length) {
+
+                    var temp = treesFilterV2(tree.children, search);
+
+                    if (temp.length) {
+                        tree.children = temp;
+                        tempResult.push(tree);
+//                        var tr = angular.copy(tree);
+//                        tr.children = temp;
+//                        tempResult.push(tr);
+                    }
+
+                } else {
+                    if (~tree.caption.indexOf(search)) {
+                        tempResult.push(tree);
+                    }
+                }
+
+                result = result.concat(tempResult);
+            });
+
+            return result;
+        }
+
+        var input = [
+            {
+                "caption": "订单",
+                "id": 1,
+                "children": [
+                    {
+                        "caption": "主订单编号",
+                        "id": 2,
+                        "type": "text"
+                    },
+                    {
+                        "caption": "下单时间",
+                        "id": 3,
+                        "type": "date",
+                        "children": [
+                            {
+                                "caption": "订单状态",
+                                "id": 5,
+                                "type": "block",
+                                "children": [
+                                    {
+                                        "caption": "已下单",
+                                        "id": 9,
+                                        "type": "block"
+                                    },
+                                    {
+                                        "caption": "未下单",
+                                        "id": 10,
+                                        "type": "block",
+                                        "children": [
+                                            {
+                                                "caption": "已下单",
+                                                "id": 9,
+                                                "type": "block"
+                                            },
+                                            {
+                                                "caption": "未下单",
+                                                "id": 10,
+                                                "type": "block",
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "caption": "卖家昵称",
+                                "id": 6,
+                                "type": "text"
+                            },
+                            {
+                                "caption": "下单时间",
+                                "id": 7,
+                                "type": "date"
+                            },
+                            {
+                                "caption": "付款时间",
+                                "type": "date",
+                                "id": 8
+                            }
+                        ]
+                    },
+                    {
+                        "caption": "子订单编号",
+                        "id": 4,
+                        "type": "text"
+                    }
+                ]
+            }];
+
+
+        (function benchmark() {
+            var searchArray = ["订单", "单", "时间", "下", "号", "名"];
+
+            function multipleCopy(searchArray, times) {
+                var result = [];
+                for (var i = 0; i < times; i++) {
+                    result = result.concat(searchArray);
+                }
+                return result;
+            }
+
+            searchArray = multipleCopy(searchArray, 1);
+//            console.log(searchArray);
+
+            console.time("v1");
+            searchArray.forEach(function (search) {
+                treesFilter(input.concat(), search);
+//                console.log(treesFilter(angular.copy(input), search));
+            });
+            console.timeEnd("v1");
+
+            console.time("v2");
+            searchArray.forEach(function (search) {
+                treesFilterV2(input.concat(), search);
+//                console.log(treesFilterV2(angular.copy(input), search));
+            });
+            console.timeEnd("v2");
+        })();
+
+    })();
+</script>

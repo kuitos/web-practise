@@ -1,0 +1,19 @@
+{
+  "name": "practises",
+  "version": "1.0.0",
+  "description": "kuitos's practises repo",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "practise"
+  ],
+  "author": "Kuitos",
+  "license": "MIT",
+  "dependencies": {
+    "css-loader": "",
+    "style-loader": "",
+    "babel-loader":""
+  }
+}
