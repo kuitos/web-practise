@@ -1,0 +1,47 @@
+<!--
+ Created by Kuitos on 6/11/15 20:21.
+-->
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="stylesheet" href="/bower_components/ng-sortable/dist/ng-sortable.min.css"/>
+    <link rel="stylesheet" href="/bower_components/ng-sortable/dist/ng-sortable.style.min.css"/>
+
+    <style>
+        .container {
+            border: 1px solid green;
+        }
+    </style>
+
+</head>
+<body ng-app="sortable" ng-controller="SortableCtrl">
+
+<div class="container">
+
+    <ul>
+        <li ng-repeat="li in ul track by $index" ng-model="ul" ng-bind="li"></li>
+    </ul>
+
+    <ul></ul>
+
+</div>
+
+
+<script src="/bower_components/angular/angular.min.js"></script>
+<script src="/bower_components/ng-sortable/dist/ng-sortable.min.js"></script>
+
+<script>
+
+    angular.module("sortable", ["ui.sortable"])
+            .controller("SortableCtrl", function ($scope) {
+
+                $scope.ul = [1,2,3,4,5,6,7];
+
+            });
+
+</script>
+</body>
+</html>

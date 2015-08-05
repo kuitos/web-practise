@@ -1,0 +1,52 @@
+<!--
+ Created by Kuitos on 6/11/15 18:57.
+-->
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+
+<button type="button">测试</button>
+
+<script>
+
+    var button = document.querySelector("button");
+
+    var touchStartTime,touchEndTime;
+
+    button.addEventListener("touchstart", function () {
+        console.log("touchstart");
+        touchStartTime = Date.now();
+    });
+
+    button.addEventListener("touchend", function () {
+        touchEndTime = Date.now();
+
+        if(touchEndTime - touchStartTime > 500){
+            console.log("taphold");
+        }
+    });
+
+    button.addEventListener("touchmove", function () {
+        console.log("touchmove");
+
+        var div = document.createElement("div");
+        div.innerHTML = "touchmove";
+        document.body.appendChild(div);
+    });
+
+    button.addEventListener("mousedown", function () {
+
+        var div = document.createElement("div");
+        div.innerHTML = "taphold";
+        document.body.appendChild(div);
+    });
+
+
+</script>
+</body>
+</html>

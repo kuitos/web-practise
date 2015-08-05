@@ -1,0 +1,32 @@
+<!--
+ Created by Kuitos on 2015/03/10 下午5:24.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="/bower_components/timesheet.js/dist/timesheet.css">
+</head>
+<body>
+
+<div id="timesheet-default"></div>
+
+<script src="/bower_components/timesheet.js/dist/timesheet.js"></script>
+
+<script>
+    new Timesheet('timesheet-default', 2002, 2013, [
+        ['2002', '09/2002', '发布', 'lorem'],
+        ['06/2002', '09/2003', '重大事故', 'ipsum'],
+        ['2003', '回滚'],
+        ['10/2003', '2006', '发布', 'dolor'],
+        ['02/2005', '05/2006', '。。。。。', 'ipsum'],
+        ['07/2005', '09/2005', 'Good Luck', 'default'],
+        ['10/2005', '2008', 'popular', 'dolor'],
+        ['01/2008', '05/2009', 'yeah', 'lorem'],
+        ['01/2009', '05/2009', '出任CEO', 'lorem'],
+        ['02/2010', '05/2010', '迎娶白富美', 'lorem'],
+        ['09/2008', '06/2010', '走上人生巅峰', 'ipsum']
+    ]);
+</script>
+</body>
+</html>
