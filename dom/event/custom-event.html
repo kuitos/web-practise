@@ -1,0 +1,67 @@
+<!--
+ Created by Kuitos on 6/12/15 20:12.
+-->
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<div>11</div>
+<span>22</span>
+
+<script>
+
+    var event = document.createEvent("Event");
+    event.initEvent("end", true, true);
+    event.item = "item";
+    console.log(event.type);
+
+    var event2 = document.createEvent("Event");
+    event2.initEvent("go", true, true);
+    event2.item = "item";
+    console.log(event2.type);
+
+    var div = document.querySelector("div");
+
+    function _on(el, event, fn) {
+        el.addEventListener(event, fn, false);
+    }
+
+    function Test(el) {
+        _on(el, "end", this.onEnd);
+        _on(el, "go", this);
+    }
+
+    Test.prototype = {
+        constructor: Test,
+
+        onEnd: function (evt) {
+
+            console.log(this);
+
+        },
+
+        handleEvent: function (evt) {
+            console.log(this);
+            console.log(evt.type);
+        }
+
+    };
+
+    new Test(div);
+
+    div.dispatchEvent(event);
+    div.dispatchEvent(event2);
+
+    var span = document.querySelector("span");
+//    document.body.insertBefore(span,div);
+    console.log(div.appendChild(span));
+
+
+</script>
+
+</body>
+</html>

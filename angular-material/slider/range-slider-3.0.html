@@ -1,0 +1,241 @@
+<!--
+ Created by kui.liu on 2015/03/06 10:15 AM.
+ Email: kuitos.lau@gmail.com
+ author: EdwardCTaylor
+ author: Kuitos
+ Licence: MIT
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.min.css"/>
+
+    <style>
+        .range-slider-container {
+            position: relative;
+            height: 100px;
+        }
+
+        .range-slider-container md-slider {
+            margin: 0;
+        }
+
+        .range-track-line {
+            position: absolute;
+            height: 2px;
+            top: 23px;
+            background-color: rgb(255, 64, 129);
+        }
+
+        .range-slider-container md-slider.md-default-theme.md-min .md-thumb:after {
+            background-color: rgb(255, 64, 129) !important;
+        }
+
+        .range-slider-left, .range-slider-right {
+            position: absolute;
+            top: 0px;
+        }
+
+        .range-slider-right {
+            right: 0px;
+        }
+
+        .range-slider-left md-slider .md-thumb-container {
+            transition: -webkit-transform 0s linear;
+            transition: transform 0s linear;
+        }
+
+        .range-slider-left md-slider.md-default-theme .md-track.md-track-fill {
+            background-color: rgba(188, 188, 188, 1) !important;
+        }
+
+        .range-slider-left md-slider.md-default-theme .md-track:not(.md-track-fill) {
+            background-color: rgb(255, 64, 129) !important;
+        }
+
+        .range-slider-container md-slider .md-thumb-container {
+            transition: -webkit-transform 0s linear;
+            transition: transform 0s linear;
+        }
+
+        .range-slider-container md-slider .md-track-container {
+            transition: -webkit-transform 0s linear;
+            transition: transform 0s linear;
+        }
+
+    </style>
+</head>
+<body ng-app="sliderDemo1">
+
+<div ng-init="lower=1;upper=40;gap=0;">
+    <md-content class="md-padding">
+        <h3>range slider</h3>
+        <range-slider min="1" max="40" step="1" lower-value="lower" upper-value="upper" gap="gap"></range-slider>
+
+        <div>
+            {{lower}}
+            {{upper}}
+        </div>
+    </md-content>
+</div>
+
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="/bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="/bower_components/angular-material/angular-material.js"></script>
+
+<script type="text/ng-template" id="range-slider.tpl.html">
+    <div class='range-slider-container'>
+        <div class='range-slider-left' id="left" ng-style="{width:lowerWidth+'%'}">
+            <md-slider ng-model="lowerValue" min='{{min}}' max='{{lowerMaxLimit}}' step="{{step}}"
+                       aria-label="lowerSlider"></md-slider>
+        </div>
+        <div class="range-track-line" ng-style="{width:tracker.width+'%',left:tracker.left+'%',right:tracker.right+'%'}"></div>
+        <div class='range-slider-right' ng-style="{width:upperWidth+'%'}">
+            <md-slider ng-model="upperValue" min="{{upperMinLimit}}" max="{{max}}" step="{{step}}"
+                       aria-label="upperSlider"></md-slider>
+        </div>
+    </div>
+</script>
+
+<script>
+    angular.module('sliderDemo1', ['ngMaterial', "directives.rangeSlider"]);
+
+    angular.module('directives.rangeSlider', ['ngMaterial'])
+            .directive('rangeSlider', function () {
+                return {
+                    restrict   : "E",
+                    scope      : {
+                        max       : '=',
+                        min       : '=',
+                        gap       : '=?',
+                        step      : '=?',
+                        lowerValue: "=",
+                        upperValue: "="
+                    },
+                    templateUrl: 'range-slider.tpl.html',
+                    controller : ["$scope", "$element", function ($scope, $element) {
+
+                        var COMFORTABLE_STEP = $scope.step, // whether the step is comfortable that depends on u
+                            tracker = $scope.tracker = {    // track style
+                                width: 0,
+                                left : 0,
+                                right: 0
+                            };
+
+                        function updateSliders() {
+
+                            if ($scope.upperValue - $scope.lowerValue > $scope.gap) {
+
+                                $scope.lowerMaxLimit = $scope.lowerValue + COMFORTABLE_STEP;
+                                $scope.upperMinLimit = $scope.upperValue - COMFORTABLE_STEP;
+
+                            } else {
+                                $scope.lowerMaxLimit = $scope.lowerValue;
+                                $scope.upperMinLimit = $scope.upperValue;
+                            }
+
+                            updateSlidersStyle();
+
+                        }
+
+                        function updateSlidersStyle() {
+                            // update sliders style
+                            $scope.lowerWidth = $scope.lowerMaxLimit > $scope.min ? ($scope.lowerMaxLimit - $scope.min) / $scope.max * 100 : 0;
+                            $scope.upperWidth = $scope.upperMinLimit > $scope.min ? ($scope.max - ($scope.upperMinLimit - $scope.min)) / $scope.max * 100 : 100;
+
+                            // update tracker line style
+                            tracker.width = 100 - $scope.lowerWidth - $scope.upperWidth;
+                            tracker.left = $scope.lowerWidth || 0;
+                            tracker.right = $scope.upperWidth || 0;
+                        }
+
+                        // watch lowerValue & upperValue to update sliders
+                        $scope.$watchGroup(["lowerValue", "upperValue"], function (newVal) {
+
+                            // filter the default initialization
+                            if (newVal !== undefined) {
+                                updateSliders();
+                            }
+
+                        });
+
+                        var sliders = $element[0].querySelectorAll("md-slider"),
+                            lowerSliderElement = angular.element(sliders[0]),
+                            upperSliderElement = angular.element(sliders[1]),
+                            overlappedStart = false;
+
+                        function createFakeEvent(eventType, srcEvent) {
+
+                            var fakeEvent = document.createEvent('CustomEvent');
+                            fakeEvent.initCustomEvent(eventType, true, true, {});
+                            fakeEvent.pointer = srcEvent.pointer;
+
+                            return fakeEvent;
+                        }
+
+                        upperSliderElement.on("$md.pressdown", function () {
+                            lowerSliderElement.removeClass("active");
+                        });
+
+                        upperSliderElement.on("$md.dragstart", function () {
+                            if($scope.lowerValue === $scope.upperValue){
+                                overlappedStart = true;
+                            }
+                        });
+
+                        upperSliderElement.on("$md.dragend", function (event) {
+
+                            if (overlappedStart && event.pointer.directionX === "left") {
+
+
+//                                fakeEvent = createFakeEvent("$md.pressup", event);
+//                                upperSliderElement[0].dispatchEvent(fakeEvent);
+//                                fakeEvent = createFakeEvent("$md.dragend", event);
+//                                fakeEvent.pageX = fakeEvent.pointer.startX;
+//                                upperSliderElement.triggerHandler(fakeEvent);
+//                                upperSliderElement[0].dispatchEvent(fakeEvent);
+//
+                                lowerSliderElement[0].dispatchEvent(createFakeEvent("$md.pressdown", event));
+                                overlappedStart = false;
+//                                fakeEvent = createFakeEvent("$md.dragstart", event);
+//                                lowerSliderElement[0].dispatchEvent(fakeEvent);
+//                                fakeEvent = createFakeEvent("$md.drag", event);
+//                                lowerSliderElement[0].dispatchEvent(fakeEvent);
+
+                                //                                fakeEvent.type = "$md.pressup";
+//                                upperSliderElement.triggerHandler(fakeEvent);
+//                                fakeEvent.initCustomEvent("$md.dragend", true, true, {});
+                                //                                fakeEvent.type = "$md.dragend";
+//                                upperSliderElement.triggerHandler(fakeEvent);
+
+//                                fakeEvent.initCustomEvent("$md.pressdown", true, true, {});
+                                //                                fakeEvent.type = "$md.pressdown";
+//                                lowerSliderElement.triggerHandler(fakeEvent);
+//                                fakeEvent.initCustomEvent("$md.dragstart", true, true, {});
+                                //                                fakeEvent.type = "$md.dragstart";
+//                                lowerSliderElement.triggerHandler(fakeEvent);
+//                                fakeEvent.initCustomEvent("$md.drag", true, true, {});
+                                //                                fakeEvent.type = "$md.drag";
+//                                lowerSliderElement[0].dispatchEvent()
+//                                lowerSliderElement.triggerHandler(fakeEvent);
+                            }
+
+                        });
+
+                        (function init() {
+                            $scope.step = $scope.step || 1;
+                            $scope.gap = $scope.gap || 0;
+                            $scope.lowerMaxLimit = $scope.lowerValue + COMFORTABLE_STEP;
+                            $scope.upperMinLimit = $scope.upperValue - COMFORTABLE_STEP;
+                            updateSlidersStyle();
+                        })();
+
+                    }]
+                };
+
+            })
+</script>
+</body>
+</html>

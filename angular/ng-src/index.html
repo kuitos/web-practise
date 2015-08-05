@@ -1,0 +1,36 @@
+<!--
+ Created by Kuitos on 7/22/15 13:10.
+-->
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-app="app" ng-controller="ctrl">
+
+<button value="点击" ng-click="click()"></button>
+<img ng-src="{{src}}">
+
+<script src="../../bower_components/angular/angular.min.js"></script>
+<script>
+
+    angular.module("app", [])
+            .controller("ctrl", function ($scope, $http) {
+
+                $scope.src = "1.jpg";
+
+                $scope.click = function () {
+
+                    $http.get("bower.json").error(function () {
+                        $scope.src = "//:null";
+                    });
+
+                };
+
+            });
+
+</script>
+
+</body>
+</html>

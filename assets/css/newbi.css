@@ -1,0 +1,363 @@
+/** NewBI基础样式 **/
+body, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+    /* Set your content font stack here: */
+    font-family: "Lantinghei SC Extralight", "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "Lucida Sans Unicode", "Helvetica", "Arial", "Verdana", "sans-serif";
+    color: #3a3a3a;
+}
+
+body {
+    background-color: #fcfcfc;
+    -webkit-font-smoothing: antialiased;
+}
+a, a:active, a:focus, a:visited, a:hover {
+    outline: none;
+}
+
+ui-view, ng-include {
+    display: block;
+}
+
+/* 页面输入框placeholder样式 */
+::-webkit-input-placeholder, input:-moz-placeholder {
+    color: #a5a5a5;
+}
+
+/* 页面滚动条样式 */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f0f0f2;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #f0f0f2;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #9e9e9e;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:horizontal:hover,
+::-webkit-scrollbar-thumb:vertical:hover {
+    background-color: #757575;
+}
+
+::-webkit-scrollbar-thumb:horizontal:active,
+::-webkit-scrollbar-thumb:vertical:active {
+    background-color: #757575;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+::-webkit-resizer {
+    background-color: transparent;
+}
+
+/* 页面跳转链接样式 */
+.nb-link {
+    font-size: 12px;
+    color: #0083ba;
+    cursor: pointer;
+}
+
+.nb-link:hover {
+    color: #006995;
+}
+
+/* 页面Icon 样式 */
+.nb-icon {
+    color: #c8c8c8;
+    cursor: pointer;
+}
+
+.nb-icon:hover {
+    color: #80cf91;
+}
+
+.nb-icon:active {
+    color: #4fa862;
+}
+
+/* 页面链接按钮样式 */
+.nb-link-btn {
+    font-size: 12px;
+    color: #068d30;
+    cursor: pointer;
+}
+
+.nb-link-btn:hover {
+    color: #08b03c;
+}
+
+/* 页面公用面板样式 */
+ui\-view.nb-view {
+    margin-left: calc(100vw - 100%);
+    padding: 48px 0 20px;
+    background-color: #f9f9fb;
+}
+
+.nb-view-panel {
+    padding: 30px 30px 40px;
+
+    margin: 0px auto;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    min-height: -webkit-calc(100% - 150px);
+    min-height: -moz-calc(100% - 150px);
+    min-height: calc(100% - 150px);
+}
+
+/* 面包屑 公共样式 */
+.breadcrumb {
+    display: none;
+    max-width: 860px;
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #eeeeee;
+    border-bottom: 0;
+    margin: 0px auto;
+    cursor: pointer;
+
+    -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.breadcrumb:hover {
+    background-color: #ffffff;
+}
+
+.nb-view-panel .nb-view-panel-header {
+    margin: 0px 0 15px 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.nb-view-panel-header .icon-iconfont-return {
+    margin: 1px 8px 0px 10px;
+    font-size: 22px;
+    float: left;
+    color: #c5c5c5;
+    cursor: pointer;
+}
+
+.nb-view-panel-header .panel-caption {
+    font-size: 1.125em;
+    font-weight: 600;
+}
+
+.nb-view-panel-header .panel-description {
+    font-size: 0.75em;
+    color: #777;
+    padding: 5px 0px 13px;
+    text-indent: 10px;
+}
+
+.nb-view-panel-header .panel-description .apply-date {
+    margin-left: 60px;
+}
+
+.nb-view-panel .tabs-toolbar .right {
+    margin-right: 10px;
+}
+
+@media screen and (min-width: 64em) {
+    body {
+        background-color: #f9f9fb;
+    }
+
+    .breadcrumb {
+        display: block;
+    }
+
+    ui\-view.nb-view {
+        padding: 69px 0 20px;
+    }
+
+    .nb-view-panel {
+        max-width: 960px;
+        background-color: #FFF;
+        box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
+    }
+
+    .nb-view-panel-header .icon-iconfont-return {
+        display: none;
+    }
+
+    .nb-view-panel-header .panel-description {
+        text-indent: 0;
+    }
+
+
+}
+
+/** 自定义样式 **/
+nav ul,
+nav ol {
+    /* 覆盖Pure中的样式 */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav ul a,
+nav ol a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+.nb-responsive-item-wrapper {
+    width: 100%;
+    float: left;
+}
+
+i.icon-iconfont-arrowdown.border:hover {
+    border-color: #64ba76;
+    color: #64ba76;
+}
+
+[ui-sref] {
+    cursor: pointer;
+}
+
+/** 工具样式 **/
+/* 清理浮动:http://nicolasgallagher.com/micro-clearfix-hack/ */
+.nb-clearfix:after {
+    display: block;
+    content: " ";
+    clear: both;
+}
+
+.nb-vm1 {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    display: block;
+}
+
+.nb-vm2 {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.nb-vm3 {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    -moz-transform: translateY(-50%) translateX(-50%);
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.nb-ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.nb-invisible {
+    visibility: hidden;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+/* 输入框交互样式 */
+.input-edit .input-edit-desc {
+    margin: 0;
+    height: 30px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    display: inline-block;
+
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.input-edit .input-edit-desc:hover {
+    border-color: #e4e4e4;
+}
+
+.input-edit .input-edit-desc span {
+    padding: 0px 8px;
+    line-height: 30px;
+    max-width: 118px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.input-edit input[type=text] {
+    height: 30px;
+    padding: 6px 8px;
+    border: 1px solid #80cf91;
+
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.input-edit .icon-iconfont-edit {
+    font-size: initial;
+    color: #64ba76;
+    margin-right: 8px;
+    line-height: 30px;
+}
+
+.input-edit .input-edit-desc > * {
+    float: left;
+}
+
+md-tabs.md-default-theme md-tabs-ink-bar {
+    color: #676767;
+    background: #64ba76;
+
+}
+
+i.icon-iconfont-cancel {
+    color: #c5c5c5;
+}
+
+i.icon-iconfont-cancel:hover {
+    color: #757575;
+}
+
+.anticlockwise-rotate-90deg {
+    display: inline-block;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}

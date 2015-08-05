@@ -1,0 +1,34 @@
+<!--
+ Created by Kuitos on 2015/04/02 上午11:05.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <style>
+        .ui-match {
+            background: yellow;
+        }
+    </style>
+</head>
+<body ng-app="highlight">
+
+<label><input type="checkbox" ng-model="caseSensitive"> Case Sensitive?</label>
+<input placeholder="Enter some text to highlight" value="you" ng-model="highlightText">
+
+<p ng-bind-html="'Hello there, how are you today? I\'m fine thank you.' | highlight:highlightText:caseSensitive"></p>
+
+
+<script src="/bower_components/angular/angular.min.js"></script>
+<script src="/bower_components/angular-ui-utils/ui-utils.min.js"></script>
+
+<script>
+    angular.module("highlight", ["ui.highlight"])
+            .config(function($sceProvider){
+                $sceProvider.enabled(false);
+            });
+</script>
+
+</body>
+</html>

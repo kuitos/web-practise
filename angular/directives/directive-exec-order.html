@@ -1,0 +1,161 @@
+<!--
+ Created by Kuitos on 6/12/15 10:02.
+-->
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-app="ngApp">
+
+<parent>
+
+    <child>
+        <grand-child grand-child2 grand-child3></grand-child>
+        <grand-child-sibling></grand-child-sibling>
+    </child>
+</parent>
+
+<script src="../../bower_components/angular/angular.min.js"></script>
+
+<script>
+
+    angular.module("ngApp", [])
+            .directive("parent", function () {
+
+                return {
+
+                    restrict: "E",
+                    compile: function () {
+                        console.log("parent compiled");
+
+                        return {
+
+                            pre: function () {
+                                console.log("parent pre linked");
+                            },
+
+                            post: function () {
+                                console.log("parent post linked");
+                            }
+
+                        };
+                    }
+
+                };
+            })
+
+            .directive("child", function () {
+
+                return {
+
+                    restrict: "E",
+                    compile: function () {
+                        console.log("child compiled");
+
+                        return {
+
+                            pre: function () {
+                                console.log("child pre linked");
+                            },
+
+                            post: function () {
+                                console.log("child post linked");
+                            }
+
+                        };
+                    }
+
+                };
+
+            })
+
+            .directive("grandChild", function () {
+
+                return {
+
+                    restrict: "E",
+                    compile: function () {
+
+
+
+                        console.log("grandChild compiled");
+
+                        return {
+
+                            pre: function (scope) {
+
+
+                                var html = scope.list.map(function (li) {
+                                    return li+"sss";
+                                });
+
+                                element.appendChild(html);
+
+                                console.log("grandChild pre linked");
+                            },
+
+                            post: function () {
+                                console.log("grandChild post linked");
+                            }
+
+                        };
+                    }
+
+                };
+
+            })
+
+            .directive("grandChild2", function () {
+
+                return {
+                    priority:1000,
+                    restrict: "EA",
+                    compile: function () {
+                        console.log("grandChild2 compiled");
+
+                        return {
+
+                            pre: function () {
+                                console.log("grandChild2 pre linked");
+                            },
+
+                            post: function () {
+                                console.log("grandChild2 post linked");
+                            }
+
+                        };
+                    }
+
+                };
+
+            })
+
+            .directive("grandChildSibling", function () {
+
+                return {
+                    priority:100,
+
+                    restrict: "EA",
+                    compile: function () {
+                        console.log("grandChildSibling compiled");
+
+                        return {
+                            pre: function () {
+                                console.log("grandChildSibling pre linked");
+                            },
+
+                            post: function () {
+                                console.log("grandChildSibling post linked");
+                            }
+                        };
+                    }
+
+                };
+
+            })
+
+</script>
+</body>
+</html>

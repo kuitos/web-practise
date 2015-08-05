@@ -1,0 +1,116 @@
+<!--
+ Created by kui.liu on 2015/03/06 上午10:15.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.min.css"/>
+
+    <style>
+        .range-slider-container {
+            position:relative;
+            width:100%;
+            height:100px;
+        }
+
+        .range-slider-left {
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+        md-slider .md-track-container .md-track.md-track-fill {
+            background-color:rgb(132,132,132);
+        }
+
+        .range-slider-right {
+            position:absolute;
+            top:0;
+            right:0px;
+        }
+
+        /*// Overwrite specific to range adaptation*/
+           .range-slider-right md-slider .md-thumb-container {
+               transition: -webkit-transform 0s linear;
+               transition: transform 0s linear;
+           }
+
+        .range-slider-left md-slider.md-default-theme .md-track.md-track-fill {
+            background-color:rgba(0,0,0,0.26) !important;
+        }
+    </style>
+</head>
+<body ng-app="sliderDemo1">
+
+<div>
+    <md-content class="md-padding">
+        <h3>range slider</h3>
+        <range-slider min="1" max="40" step="1" lower-value="lower" upper-value="upper" min-gap="0"></range-slider>
+    </md-content>
+
+    <input ng-model="min" type="text">
+    <input ng-model="max" type="text">
+    <input ng-model="step" type="text">
+    {{lowerValue}}
+    1449763200000
+    1426003200000
+    <md-slider aria-label="upperValue" ng-model="lowerValue" min="{{min||1}}" max="{{max||1000}}" step="{{step||1}}"></md-slider>
+</div>
+
+<script src="/bower_components/angular/angular.min.js"></script>
+<script src="/bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="/bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="/bower_components/angular-material/angular-material.min.js"></script>
+
+<script type="text/ng-template" id="range-slider.tpl.html">
+
+    <div class='range-slider-container'>
+        <div class='range-slider-left'>
+            <md-slider aria-label="upperValue" ng-model="lowerValue" min='{{min}}' max='{{lowerMax}}'></md-slider>
+        </div>
+        <div class='range-slider-right' ng-style="{width: upperWidth}">
+            <md-slider aria-label="upperValue" ng-model="upperValue" min="{{upperMin}}" max="{{max}}"></md-slider>
+        </div>
+    </div>
+</script>
+
+<script>
+    angular.module('sliderDemo1', ['ngMaterial', "directives.rangeSlider"]);
+
+    angular.module('directives.rangeSlider',['ngMaterial'])
+            .directive('rangeSlider', function ($compile) {
+                return {
+                    restrict: "E",
+//                    replace: true,
+                    scope: {
+                        max:'=',
+                        min:'=',
+                        minGap: '=',
+                        step:'=',
+                        lowerValue: "=lowerValue",
+                        upperValue: "=upperValue"
+                    },
+                    controller: function($scope) {
+                        $scope.lowerMax = $scope.max - $scope.step;
+                        $scope.upperMin = $scope.lowerValue + $scope.step;
+
+                        $scope.lowerValue = $scope.min;
+                        $scope.upperValue = $scope.max;
+
+                        $scope.$watch('lowerValue',function(){
+                            $scope.upperMin = $scope.lowerValue + $scope.step;
+                            $scope.upperWidth = ((($scope.max-($scope.lowerValue + $scope.step))/$scope.max) * 100) + "%";
+                            if($scope.lowerValue > ($scope.upperValue - $scope.minGap) && $scope.upperValue < $scope.max) {
+                                $scope.upperValue = $scope.lowerValue + $scope.minGap;
+                            }
+                        })
+                    },
+                    templateUrl:'range-slider.tpl.html',
+                    link: function (scope, element, attrs) {
+
+                    }
+                }
+            })
+</script>
+</body>
+</html>

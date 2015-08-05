@@ -1,0 +1,135 @@
+/* NewBI Button Style */
+.pure-secondary-button {
+    width: 90px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #e4e4e4;
+    color: #3d3d3d;
+    background-color: #fcfcfc;
+    cursor: pointer;
+    outline: none;
+
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.pure-secondary-button:hover {
+    background-color: #fff;
+}
+
+.pure-secondary-button:active {
+    background-color: #f7f7f7;
+}
+
+/* TODO 预定义，待dropdown list出来后可能删除 */
+.pure-select-button {
+    border: 1px solid #e2e2e2;
+    background-color: #fff;
+    font-size: 12px;
+    color: #3a3a3a;
+    height: 30px;
+    border-radius: 2px;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.pure-select-button:hover,
+.pure-select-button:focus,
+.pure-select-button:active,
+.pure-select-button:visited {
+    -ms-filter: none;
+    filter: none;
+    background-image: none;
+    border-color: #80cf91;
+    box-shadow: none;
+    outline: none;
+}
+
+.pure-select-button .icon-iconfont-arrow{
+    font-size: 10px;
+    color: #b9b9b9;
+}
+
+/* NewBI Form Style */
+.pure-form {
+    margin-bottom: 0;
+}
+
+.pure-form fieldset {
+    border: 0;
+    padding: 0;
+}
+
+.pure-form legend {
+    border: 0;
+    padding: 0 0 16px;
+    color: #3a3a3a;
+    font-size: 14px;
+    margin: 0;
+}
+
+.pure-form input[type=text], .pure-form input[type=password],
+.pure-form input[type=email], .pure-form input[type=url],
+.pure-form input[type=date], .pure-form input[type=month],
+.pure-form input[type=time], .pure-form input[type=datetime],
+.pure-form input[type=datetime-local], .pure-form input[type=week],
+.pure-form input[type=number], .pure-form input[type=search],
+.pure-form input[type=tel], .pure-form input[type=color],
+.pure-form select, .pure-form textarea {
+    border-color: #e2e2e2;
+    box-shadow: none;
+    border-radius: 2px;
+    padding: 0px 10px;
+    font-size: 12px;
+    height: 27px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.pure-form textarea {
+    padding: 8px 10px;
+}
+
+.pure-form input[type=text]:focus, .pure-form input[type=password]:focus,
+.pure-form input[type=email]:focus, .pure-form input[type=url]:focus,
+.pure-form input[type=date]:focus, .pure-form input[type=month]:focus,
+.pure-form input[type=time]:focus, .pure-form input[type=datetime]:focus,
+.pure-form input[type=datetime-local]:focus, .pure-form input[type=week]:focus,
+.pure-form input[type=number]:focus, .pure-form input[type=search]:focus,
+.pure-form input[type=tel]:focus, .pure-form input[type=color]:focus,
+.pure-form select:focus, .pure-form textarea:focus {
+    border-color: #80cf91;
+    box-shadow: 0 0px 8px 0px rgba(100, 186, 118, .15);
+}
+
+.pure-form input[type=text][disabled], .pure-form input[type=password][disabled],
+.pure-form input[type=email][disabled], .pure-form input[type=url][disabled],
+.pure-form input[type=date][disabled], .pure-form input[type=month][disabled],
+.pure-form input[type=time][disabled], .pure-form input[type=datetime][disabled],
+.pure-form input[type=datetime-local][disabled], .pure-form input[type=week][disabled],
+.pure-form input[type=number][disabled], .pure-form input[type=search][disabled],
+.pure-form input[type=tel][disabled], .pure-form input[type=color][disabled],
+.pure-form select[disabled], .pure-form textarea[disabled] {
+    background-color: #f5f7f8;
+    color: #777777;
+    border-color: #e2e2e2;
+}
+
+.pure-form input.error[type=text], .pure-form input.error[type=password],
+.pure-form input.error[type=email], .pure-form input.error[type=url],
+.pure-form input.error[type=date], .pure-form input.error[type=month],
+.pure-form input.error[type=time], .pure-form input.error[type=datetime],
+.pure-form input.error[type=datetime-local], .pure-form input.error[type=week],
+.pure-form input.error[type=number], .pure-form input.error[type=search],
+.pure-form input.error[type=tel], .pure-form input.error[type=color],
+.pure-form select.error, .pure-form textarea.error {
+    border-color: red;
+}

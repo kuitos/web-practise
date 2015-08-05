@@ -1,0 +1,61 @@
+<!--
+ Created by kui.liu on 2015/03/02 下午5:37.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+<div style="height: 1080px" ondragover="dragOver(event)">
+
+    <div draggable="true" style="position: relative;width: 100px;" ondragstart="dragStart(event)" ondrag="drag(event)">
+        drag me
+    </div>
+
+</div>
+
+
+<script>
+
+    var startX = 0, startY = 0, x = 0, y = 0;
+
+    function dragStart(ev) {
+        startX = ev.pageX - x;
+        startY = ev.pageY - y;
+    }
+
+    function dragEnter(ev) {
+        console.log(ev);
+    }
+
+    function drop(ev) {
+
+    }
+
+    function drag(ev) {
+        //        ev.preventDefault();
+        x = ev.pageX - startX;
+        y = ev.pageY - startY;
+        ev.target.style.left = x + "px";
+        ev.target.style.top = y + "px";
+//        event.preventDefault();
+
+        console.log(x);
+        console.log(y);
+    }
+
+    function dragEnd(ev) {
+        ev.target.style.left = ev.pageX + "px";
+        ev.target.style.top = ev.pageY + "px";
+    }
+
+    function dragOver(ev) {
+        ev.preventDefault();
+    }
+
+
+</script>
+</body>
+</html>

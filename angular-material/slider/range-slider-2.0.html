@@ -1,0 +1,202 @@
+<!--
+ Created by kui.liu on 2015/03/06 上午10:15.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.min.css"/>
+
+    <style>
+        .range-slider-container {
+            position: relative;
+        }
+
+        .range-slider-container md-slider {
+            margin: 0;
+        }
+
+        /*.range-track-line {*/
+            /*position: absolute;*/
+            /*height: 2px;*/
+            /*top: 23px;*/
+            /*width: 100%;*/
+            /*background-color: rgb(255, 64, 129);*/
+        /*}*/
+
+        .range-slider-container md-slider.md-default-theme.md-min .md-thumb:after {
+            background-color: rgb(255, 64, 129) !important;
+        }
+
+        .range-slider-left, .range-slider-right {
+            position: absolute;
+            top: 0px;
+            /*width: 50%;*/
+        }
+
+        .range-slider-right {
+            right: 0px;
+        }
+
+        .range-slider-left md-slider .md-thumb-container {
+            transition: -webkit-transform 0s linear;
+            transition: transform 0s linear;
+        }
+
+        .range-slider-left md-slider.md-default-theme .md-track.md-track-fill {
+            background-color: rgba(188, 188, 188, 1) !important;
+        }
+
+        .range-slider-left md-slider.md-default-theme .md-track:not(.md-track-fill) {
+            background-color: rgb(255, 64, 129) !important;
+        }
+
+        .range-slider-container md-slider .md-thumb-container {
+            transition: -webkit-transform 0s linear;
+            transition: transform 0s linear;
+        }
+
+    </style>
+</head>
+<body ng-app="sliderDemo1">
+
+<div ng-init="lower=1;upper=40;gap=0;">
+    <md-content class="md-padding">
+        <h3>range slider</h3>
+        <range-slider min="1" max="40" step="1" lower-value="lower" upper-value="upper" min-gap="gap"></range-slider>
+
+        <div>
+            {{lower}}
+            {{upper}}
+        </div>
+    </md-content>
+</div>
+
+<script src="/bower_components/angular/angular.min.js"></script>
+<script src="/bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="/bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="/bower_components/angular-material/angular-material.min.js"></script>
+
+<script type="text/ng-template" id="range-slider.tpl.html">
+    <div class='range-slider-container'>
+        <div class='range-slider-left' ng-style="{width:lowerWidth+'%'}">
+            <md-slider flex ng-model="lowerValue" min='{{min}}' max='{{lowerMaxLimit}}' step="{{step}}"
+                       aria-label="lowerSlider"></md-slider>
+        </div>
+        <div class="range-track-line"></div>
+        <div class='range-slider-right' ng-style="{width:upperWidth+'%'}">
+            <md-slider flex ng-model="upperValue" min="{{upperMinLimit}}" max="{{max}}" step="{{step}}"
+                       aria-label="upperSlider"></md-slider>
+        </div>
+    </div>
+</script>
+
+<script>
+    angular.module('sliderDemo1', ['ngMaterial', "directives.rangeSlider"]);
+
+    angular.module('directives.rangeSlider', ['ngMaterial'])
+            .directive('rangeSlider', function () {
+                return {
+                    restrict   : "E",
+                    scope      : {
+                        max       : '=',
+                        min       : '=',
+                        minGap    : '=',
+                        step      : '=',
+                        lowerValue: "=",
+                        upperValue: "="
+                    },
+                    controller : function ($scope) {
+
+                        $scope.step = $scope.step || 1;
+                        $scope.minGap = $scope.minGap || 0;
+                        $scope.lowerMaxLimit = $scope.upperMinLimit = $scope.max / 2;
+
+                        $scope.$watch("lowerValue", function (lowerValue, oldLowerValue) {
+
+                            if (lowerValue !== undefined) {
+
+                                // 当slider处于同一侧
+                                if (isTwoSliderAtSameSide()) {
+
+                                    // 当左侧slider向右拖动时且lower+gap值不超过upper时
+                                    if (lowerValue - oldLowerValue > 0) {
+
+                                        if (lowerValue + $scope.minGap < $scope.upperValue) {
+                                            $scope.lowerMaxLimit = $scope.upperMinLimit = lowerValue + $scope.step;
+                                        } else {
+                                            $scope.lowerMaxLimit = lowerValue;
+                                            $scope.upperMinLimit = lowerValue + $scope.minGap;
+                                        }
+
+                                        updateSliderWidth($scope.lowerMaxLimit);
+                                    } else {
+
+                                        if (oldLowerValue + $scope.minGap === $scope.upperValue) {
+                                            $scope.lowerMaxLimit = $scope.upperMinLimit = lowerValue + $scope.step;
+                                            updateSliderWidth($scope.lowerMaxLimit);
+                                        }
+
+                                    }
+
+                                } else {
+                                    resetSlider();
+                                }
+                            }
+
+                        });
+
+                        $scope.$watch("upperValue", function (upperValue, oldUpperValue) {
+
+                            if (upperValue !== undefined) {
+
+                                // 当slider处于同一侧才做宽度的调整
+                                if (isTwoSliderAtSameSide()) {
+
+                                    // 当右侧slider向左拖动时且lower+gap值不小于lower时地方定胜负
+                                    if (upperValue - oldUpperValue < 0) {
+
+                                        if (upperValue - $scope.minGap > $scope.lowerValue) {
+                                            $scope.lowerMaxLimit = $scope.upperMinLimit = upperValue - $scope.step;
+
+                                        } else {
+                                            $scope.lowerMaxLimit = $scope.upperMinLimit = upperValue;
+                                        }
+
+                                        updateSliderWidth($scope.lowerMaxLimit);
+
+                                    } else {
+                                        if (oldUpperValue - $scope.minGap === $scope.lowerValue) {
+                                            $scope.lowerMaxLimit = $scope.upperMinLimit = upperValue - $scope.step;
+                                            updateSliderWidth($scope.lowerMaxLimit);
+                                        }
+                                    }
+
+                                } else {
+                                    resetSlider();
+                                }
+                            }
+                        });
+
+                        function updateSliderWidth(lowerMaxLimit) {
+                            $scope.lowerWidth = lowerMaxLimit / $scope.max * 100;
+                            $scope.upperWidth = $scope.upperValue / $scope.max * 100;
+                        }
+
+                        function isTwoSliderAtSameSide() {
+                            return ($scope.lowerValue < $scope.max / 2 && $scope.upperValue - $scope.step < $scope.max / 2)
+                                    || ($scope.lowerValue + $scope.step > $scope.max / 2 && $scope.upperValue > $scope.max / 2)
+                        }
+
+                        function resetSlider() {
+                            $scope.lowerMaxLimit = $scope.upperMinLimit = $scope.max / 2;
+                            $scope.upperWidth = $scope.lowerWidth = 50;
+                        }
+                    },
+                    templateUrl: 'range-slider.tpl.html'
+                };
+
+            })
+</script>
+</body>
+</html>

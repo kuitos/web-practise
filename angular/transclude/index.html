@@ -1,0 +1,73 @@
+<!--
+ Created by Kuitos on 2015/03/19 下午3:03.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body ng-app="test">
+
+<div>
+    <md type="sss">sssss</md>
+
+    <div ng-init="name='lk'"></div>
+    <span ng-bind="name"></span>
+
+    <todo>
+        <div>
+            {{name='ddddd'}}
+        </div>
+    </todo>
+</div>
+
+<script src="/bower_components/angular/angular.min.js"></script>
+
+<script>
+    angular.module("test", [])
+
+            .directive("md", function () {
+
+                return {
+
+                    replace   : true,
+                    transclude: true,
+                    template  : "<button ng-transclude></button>"
+
+                };
+
+            })
+
+            .directive("todo", function () {
+
+                return {
+                    restrict  : "E",
+                    transclude: true,
+                    template  : "<header>{{name}}</header>" +
+                    "<div>" +
+                    "   <span>这里是自定义区域</span>" +
+                    "   <content-transclude></content-transclude>" +
+                    "</div>",
+                    scope     : {
+                        header: "@"
+                    },
+                    controller: ["$transclude", function ($transclude) {
+                        this.transcludeFn = $transclude;
+                    }]
+                };
+            })
+
+            .directive("contentTransclude", function () {
+                return {
+                    restrict: "E",
+                    require : "^todo",
+                    link    : function (scope, element, attr, todoController) {
+                        todoController.transcludeFn(scope.$parent, function (transcludeContent) {
+                            element.append(transcludeContent);
+                        });
+                    }
+                };
+            });
+</script>
+</body>
+</html>
