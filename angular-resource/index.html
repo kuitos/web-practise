@@ -1,0 +1,37 @@
+<!-- Created by Kuitos on 15/9/6. -->
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body ng-app="ngApp" ng-controller="AppCtrl">
+
+<span ng-bind="resource"></span>
+
+<script src="../node_modules/angular/angular.js"></script>
+<script src="../node_modules/angular-resource/angular-resource.js"></script>
+<script>
+
+  angular
+      .module('ngApp', ['ngResource'])
+      .config(['$provide', function ($provide) {
+
+        $provide.decorator('$resource',function ($delegate) {
+          console.log($delegate);
+          return $delegate;
+        });
+
+      }])
+      .controller('AppCtrl', ['$resource', '$http', '$scope', function ($resource, $http, $scope) {
+
+        $scope.resource = $http.get('/web-practise/data/resource-test.json').then(function (res) {
+//          $scope.resource = res.data;
+          console.log(res);
+        });
+
+      }]);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!-- Created by Kuitos on 15/8/13. -->
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body ng-app="app" ng-controller="ctrl">
+
+<input type="text" ng-model="query"/>
+
+<ul>
+  <li ng-repeat="li in data|filter:query:func track by $index">
+    <span ng-bind="li.name"></span>
+    <span ng-bind="li.age"></span>
+  </li>
+
+</ul>
+
+<script src="../../node_modules/angular/angular.min.js"></script>
+
+<script>
+
+  angular.module('app', [])
+
+      .controller('ctrl', function ($scope) {
+
+        $scope.data = [
+          {name: 'kui', age: 10},
+          {name: 'kui1', age: 11},
+          {name: 'kui2', age: 12},
+          {name: 'kui3', age: 13},
+          {name: 'kui4', age: 14},
+          {name: 'kui5', age: 15},
+          {name: 'kui6', age: 16}
+        ];
+
+        $scope.func = function (actual, expected) {
+          console.log(actual, expected);
+        };
+
+      });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!-- Created by Kuitos on 15/9/15. -->
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+
+
+<script src="../../node_modules/whatwg-fetch/fetch.js"></script>
+
+<script>
+
+  fetch('db.json').then(function (res) {
+    console.log(res);
+    return res.json();
+  }).then(function (res) {
+    console.log(res);
+  });
+
+</script>
+</body>
+</html>

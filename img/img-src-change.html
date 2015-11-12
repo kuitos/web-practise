@@ -1,0 +1,36 @@
+<!-- Created by Kuitos on 15/8/24. -->
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+
+
+<button type="button" id="changeImg">changeImg</button>
+<img src="https://placeimg.com/240/320/any" alt="" id="img1"/>
+<img src="https://placeimg.com/320/240/any" alt="" id="img2"/>
+
+
+<script>
+
+  var imgs = ['https://placeimg.com/240/320/any', 'https://placeimg.com/320/240/any'],
+
+      img1 = document.querySelector('#img1'),
+      img2 = document.querySelector('#img2');
+
+  document.querySelector('#changeImg').addEventListener('click', function (event) {
+
+    img1.src = imgs[1];
+    img2.parentNode.removeChild(img2);
+    var newImg = document.createElement('img');
+    newImg.src = imgs[0];
+    document.body.appendChild(newImg);
+
+  });
+
+
+</script>
+</body>
+</html>

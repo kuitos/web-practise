@@ -1,0 +1,31 @@
+<!-- Created by Kuitos on 15/10/13. -->
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+
+<button id="button">button</button>
+
+<script src="../../bower_components/seajs/dist/sea-debug.js"></script>
+<script>
+
+  seajs.config({
+
+    base : "../module",
+    debug: true
+
+  });
+  seajs.use('../cmd/app.js');
+
+</script>
+
+<p>
+  结论:
+    sea.js通过toString()静态分析代码,将依赖包先下载但是并不执行模块代码,只有当真正用(代码执行到require时)才做模块执行.
+  同时提供require.async方法实现在require的时候才起download具体模块
+</p>
+</body>
+</html>

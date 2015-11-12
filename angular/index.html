@@ -11,28 +11,11 @@
 
     <div ng-controller="ctrl">
 
-        <span ng-bind="name"></span>
-        {{asdfasdf}}
-        <span ng-controller="ctrl1">
-            <span test="d">
-                <span>sfsdf</span>
-            </span>
-        </span>
+        <span ng-repeat="o in array track by o.hh" ng-bind="o.name"></span>
 
+</div>
 
-        <span ng-controller="ctrl3"></span>
-
-    </div>
-
-    <input type="text" ng-model="input"/>
-    <span ng-bind="input"></span>
-
-    <!--<p ng-scope="e"></p>-->
-
-    <span blik>asdfasdfasfd</span>
-
-
-    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../node_modules/angular/angular.min.js"></script>
     <script>
 
         angular.module("app", [])
@@ -42,45 +25,55 @@
                     $scope.name = "ab";
 
 
+                $scope.array = [
+
+                    {name:'a',id:1},
+                    {name:'b',id:2},
+                    {name:'c',id:3},
+                    {name:'d',id:4},
+                    {name:'e',id:1}
+                ];
+
+
                     $scope.$broadcast("dataUpdated", $scope.name);
 
                     $scope.$emit();
 
                 })
 
-                .controller("ctrl3", function ($scope, Store) {
-
-                    $scope.$on("dataUpdated", function (event, data) {
-
-                    });
-
-                    $scope.name = "ll";
-                    Store.setName($scope.name);
-                    Store.name = $scope.name;
-                })
-
-                .controller("ctrl1", function ($scope) {
-                    console.log($scope.name);
-                })
-
-                .directive("test", ["Store",function (Store) {
-
-                    return {
-
-                        scope:{
-
-                        },
-                        require:"^ngModel",
-
-                        link: function (scope) {
-
-                            scope.age = 10;
-                            console.log(Store.getName());
-
-                        }
-                    }
-
-                }]);
+//                .controller("ctrl3", function ($scope, Store) {
+//
+//                    $scope.$on("dataUpdated", function (event, data) {
+//
+//                    });
+//
+//                    $scope.name = "ll";
+//                    Store.setName($scope.name);
+//                    Store.name = $scope.name;
+//                })
+//
+//                .controller("ctrl1", function ($scope) {
+//                    console.log($scope.name);
+//                })
+//
+//                .directive("test", ["Store",function (Store) {
+//
+//                    return {
+//
+//                        scope:{
+//
+//                        },
+//                        require:"^ngModel",
+//
+//                        link: function (scope) {
+//
+//                            scope.age = 10;
+//                            console.log(Store.getName());
+//
+//                        }
+//                    }
+//
+//                }]);
 
 
 //        $("").blink();

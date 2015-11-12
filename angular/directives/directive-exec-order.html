@@ -17,7 +17,7 @@
     </child>
 </parent>
 
-<script src="../../bower_components/angular/angular.min.js"></script>
+<script src="../../node_modules/angular/angular.js"></script>
 
 <script>
 
@@ -76,6 +76,7 @@
                 return {
 
                     restrict: "E",
+                    scope:{},
                     compile: function () {
 
 
@@ -87,11 +88,11 @@
                             pre: function (scope) {
 
 
-                                var html = scope.list.map(function (li) {
-                                    return li+"sss";
-                                });
-
-                                element.appendChild(html);
+//                                var html = scope.list.map(function (li) {
+//                                    return li+"sss";
+//                                });
+//
+//                                element.appendChild(html);
 
                                 console.log("grandChild pre linked");
                             },
@@ -138,6 +139,7 @@
                     priority:100,
 
                     restrict: "EA",
+                    templateUrl:'template.html',
                     compile: function () {
                         console.log("grandChildSibling compiled");
 
