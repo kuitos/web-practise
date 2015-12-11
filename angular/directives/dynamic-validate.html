@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>dynamic-validate</title>
+</head>
+<body ng-app="app">
+
+<form name="myForm">
+
+  <input type="checkbox" ng-model="isRequired">isRequired
+
+  <input type="text" ng-model="text1" dynamic-validate="{required:isRequired}">text1
+  <input type="text" ng-model="text2" dynamic-validate="{required:!isRequired}">text2
+
+  <span ng-bind="myForm.$valid"></span>
+
+
+</form>
+
+<script src="../../node_modules/angular/angular.js"></script>
+<script>
+
+  angular.module('app', [])
+      .directive('dynamicValidate', function () {
+
+        return {
+
+          restrict: "A",
+          require : 'ngModel',
+          link    : function (scope, element, attr, ngModelController) {
+
+            scope.$watch(attr.dynamicValidate, function (attributes) {
+
+              angular.forEach(attributes, function (attrValid, attrName) {
+                attr.$set(attrName, !!attrValid);
+                ngModelController.$validators[attrName] = !!attrValid;
+              });
+
+            });
+
+          }
+
+        };
+
+      });
+
+</script>
+
+</body>
+</html>

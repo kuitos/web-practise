@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>mouse events</title>
+</head>
+<body ng-app="test" ng-controller="ctrl">
+
+<div ng-mouseover="enter()">hhhhhhh</div>
+
+
+<script src="../node_modules/angular/angular.min.js"></script>
+<script>
+
+  angular.module('test', [])
+
+      .controller('ctrl', function ($scope) {
+        $scope.enter = function () {
+          console.log('test');
+        }
+      });
+
+</script>
+</body>
+</html>
