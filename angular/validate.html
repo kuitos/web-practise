@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>validate</title>
+
+
+</head>
+<body ng-app>
+
+
+<form name="form" ng-init="name='kuitos'" novalidate>
+
+  <input type="text" name="text" ng-model="name" required ng-minlength="3" ng-pattern="/^[a]{4}$/">
+
+
+
+</form>
+
+<span ng-bind="name"></span>
+
+{{form.text}}
+
+<script src="../node_modules/angular/angular.min.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>timer</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+
+<script>
+
+  //  function timer(lastTime) {
+  //
+  //    var now = Date.now();
+  //    console.log(now - lastTime);
+  //
+  //    while (Date.now() - now < 600) {
+  //    }
+  //
+  //    setTimeout(function () {
+  //      timer(now);
+  //    }, 500);
+  //
+  //  }
+  //
+  //  setTimeout(function () {
+  //    timer(Date.now());
+  //  }, 500);
+
+</script>
+
+<script>
+
+  var global;
+
+  function timer() {
+
+    var now = Date.now();
+    console.log(now - global);
+    global = now;
+
+    while (Date.now() - now < 1000) {
+
+    }
+
+  }
+
+  setInterval(function () {
+    timer();
+  }, 5);
+
+
+</script>
+
+
+</body>
+</html>
+</body>
+</html>

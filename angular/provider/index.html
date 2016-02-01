@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>provider</title>
+</head>
+<body ng-app="app">
+
+
+<script src="../../node_modules/angular/angular.min.js"></script>
+
+<script>
+
+	angular
+			.module('app', [])
+			.value('app', function () {
+				this.author = 'kuitos';
+			})
+			.config(['appProvider', function (appProvider) {
+				console.log(appProvider);
+			}]);
+
+
+</script>
+</body>
+</html>

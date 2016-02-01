@@ -11,7 +11,13 @@
 
     <div ng-controller="ctrl">
 
-        <span ng-repeat="o in array track by o.hh" ng-bind="o.name"></span>
+      <input type="text" ng-model="age" ng-model-options="{getterSetter:true}">
+
+      <!--<input type="text" ng-model="_age">-->
+
+      <span ng-bind="age(_age)"></span>
+
+        <span ng-repeat="o in array track by $index" ng-bind="o.name"></span>
 
 </div>
 
@@ -23,6 +29,14 @@
                 .controller("ctrl", function ($scope) {
 
                     $scope.name = "ab";
+
+                  var _age  = 10;
+
+                  $scope.age = function (age) {
+
+                    return age ?  _age = age : _age;
+
+                  };
 
 
                 $scope.array = [
